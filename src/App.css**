@@ -1,0 +1,51 @@
+/* src/App.css */
+
+/* -------------------------------------------------
+   Global layout & typography (unchanged)
+   ------------------------------------------------- */
+.App {
+  text-align: center;
+}
+
+/* -------------------------------------------------
+   Logos
+   ------------------------------------------------- */
+.logo {
+  height: 6rem;
+}
+
+.logo.react {
+  animation: spin infinite 20s linear;
+}
+
+/* -------------------------------------------------
+   Card container
+   ------------------------------------------------- */
+.card {
+  padding: 2rem;
+}
+
+/* -------------------------------------------------
+   Button styling – updated per SCRUM‑13
+   ------------------------------------------------- */
+button {
+  /* Existing visual properties */
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  /* Updated background colour to meet design spec */
+  background-color: #59E60E;
+
+  /* Ensure text remains readable on the new background */
+  color: #000000;               /* black provides sufficient contrast */
+}
+
+/* -------------------------------------------------
+   Miscellaneous text
+   ------------------------------------------------- */
+.read-the-docs {
+  color: #888;
+}
