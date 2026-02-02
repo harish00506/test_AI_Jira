@@ -1,40 +1,44 @@
 /* src/buttonStyles.css */
 
-/* ------------------------------------------------------------------
-   Button styling – updated to match new design specifications
-   ------------------------------------------------------------------ */
+/* --------------------------------------------------------------
+   Button styling – shared across the application
+   -------------------------------------------------------------- */
 
-/* Existing button class – the only change is the background colour.
-   The text colour is set to white to guarantee sufficient contrast
-   against the new pink‑ish background (#E06E95). */
+/* Base button style */
 .button {
-  /* Updated background colour */
+  /* Updated background colour to match the new design */
   background-color: #E06E95;
 
-  /* Ensure readable text on the new background */
-  color: #ffffff;
+  /* Ensure sufficient contrast for the button label */
+  color: #ffffff;               /* White text works well on #E06E95 */
 
-  /* Preserve original styling for layout and interaction */
+  /* Preserve the original look & feel */
+  padding: 0.5rem 1rem;
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
   border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 
-/* Optional hover/focus states – keep visual feedback consistent */
-.button:hover,
-.button:focus {
-  /* Slightly darken on hover/focus for better affordance */
-  background-color: #c75c84;
-  outline: none;
+/* Hover state – slightly darker for visual feedback */
+.button:hover {
+  background-color: #c75c84;   /* 10% darker than #E06E95 */
 }
 
-/* Optional active state */
+/* Active (pressed) state – subtle scale effect */
 .button:active {
-  background-color: #b05378;
+  transform: scale(0.98);
 }
+
+/* Disabled state – keep colour but indicate non‑interactivity */
+.button:disabled,
+.button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------
+   Additional utility classes (if any) can be added below
+   -------------------------------------------------------------- */
