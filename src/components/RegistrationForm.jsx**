@@ -1,0 +1,106 @@
+import { useState } from "react";
+import "./RegistrationForm.css";
+
+export default function RegistrationForm() {
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  // Validation state
+  const [errors, setErrors] = useState({});
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error for the field as user types
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  // Simple validation – only checks for empty values
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (!formData.email.trim()) newErrors.email = "Email is required.";
+    if (!formData.password) newErrors.password = "Password is required.";
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // In a real app you would send the data to a backend here.
+    // For now we just log it and reset the form.
+    console.log("Registration data:", formData);
+    alert("Registration successful!");
+
+    setFormData({ name: "", email: "", password: "" });
+    setErrors({});
+  };
+
+  return (
+    <form className="registration-form" onSubmit={handleSubmit} noValidate>
+      <h2 className="form-title">User Registration</h2>
+
+      <div className="form-group">
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Enter your name"
+          value={formData.name}
+          onChange={handleChange}
+          className={errors.name ? "input-error" : ""}
+        />
+        {errors.name && <span className="error-msg">{errors.name}</span>}
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="you@example.com"
+          value={formData.email}
+          onChange={handleChange}
+          className={errors.email ? "input-error" : ""}
+        />
+        {errors.email && <span className="error-msg">{errors.email}</span>}
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Create a password"
+          value={formData.password}
+          onChange={handleChange}
+          className={errors.password ? "input-error" : ""}
+        />
+        {errors.password && <span className="error-msg">{errors.password}</span>}
+      </div>
+
+      <button type="submit" className="submit-btn">
+        Register
+      </button>
+    </form>
+  );
+}
