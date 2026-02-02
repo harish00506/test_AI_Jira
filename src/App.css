@@ -1,4 +1,4 @@
-/* Basic styling for the counter app – keeps the UI clean and responsive */
+/* Basic styling for the counter app – keeps the original Vite look minimalistic */
 
 .app-container {
   font-family: Arial, Helvetica, sans-serif;
@@ -8,16 +8,17 @@
   margin: 0 auto;
 }
 
-h1 {
+.title {
+  font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #333;
 }
 
 .counter-display {
   font-size: 3rem;
+  font-weight: bold;
   margin: 1rem 0;
   padding: 0.5rem 1rem;
-  background: #f5f5f5;
+  border: 2px solid #333;
   border-radius: 8px;
   display: inline-block;
   min-width: 120px;
@@ -31,34 +32,34 @@ h1 {
 }
 
 .btn {
-  cursor: pointer;
   padding: 0.5rem 1rem;
   font-size: 1rem;
+  cursor: pointer;
   border: none;
   border-radius: 4px;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
-.increase {
-  background: #4caf50;
+.btn.increase {
+  background-color: #4caf50;
   color: #fff;
 }
-.increase:hover {
-  background: #45a047;
+.btn.increase:hover {
+  background-color: #45a049;
 }
 
-.decrease {
-  background: #f44336;
+.btn.decrease {
+  background-color: #f44336;
   color: #fff;
 }
-.decrease:hover {
-  background: #e53935;
+.btn.decrease:hover {
+  background-color: #e53935;
 }
 
-.reset {
-  background: #607d8b;
+.btn.reset {
+  background-color: #607d8b;
   color: #fff;
 }
-.reset:hover {
-  background: #546e7a;
+.btn.reset:hover {
+  background-color: #546e7a;
 }
