@@ -1,44 +1,25 @@
 /* src/buttonStyles.css */
 
-/* --------------------------------------------------------------
-   Button styling – shared across the application
-   -------------------------------------------------------------- */
-
-/* Base button style */
+/* Button styling – updated to match new design specifications */
 .button {
-  /* Updated background colour to match the new design */
+  /* Updated background colour per SCRUM-14 */
   background-color: #E06E95;
 
-  /* Ensure sufficient contrast for the button label */
-  color: #ffffff;               /* White text works well on #E06E95 */
-
-  /* Preserve the original look & feel */
-  padding: 0.5rem 1rem;
+  /* Preserve existing visual and interactive properties */
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
+  color: #ffffff;               /* White text ensures readability on the new background */
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  border-radius: 4px;
 }
 
-/* Hover state – slightly darker for visual feedback */
-.button:hover {
-  background-color: #c75c84;   /* 10% darker than #E06E95 */
+/* Optional hover/focus states – keep existing behaviour */
+.button:hover,
+.button:focus {
+  opacity: 0.9;
 }
-
-/* Active (pressed) state – subtle scale effect */
-.button:active {
-  transform: scale(0.98);
-}
-
-/* Disabled state – keep colour but indicate non‑interactivity */
-.button:disabled,
-.button[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* --------------------------------------------------------------
-   Additional utility classes (if any) can be added below
-   -------------------------------------------------------------- */
