@@ -8,73 +8,74 @@ Task 3
 ## SCRUM‑3 – Bug / Task 3  
 **Type:** Bug **Priority:** – **Status:** In Progress  
 
-Because the issue contains no description or reproduction steps, the first part of the work is to **clarify the problem** before any code can be written. Below is a structured approach that will let the team quickly turn this vague ticket into a concrete, fixable work item, followed by a generic “template” fix that can be adapted once the real cause is known.
+Because the ticket contains no description, we have to treat it as a *“blank‑canvas”* bug. The safest way to move forward is to:
+
+1. **Confirm the actual symptom** (what is broken, where, and when).  
+2. **Gather evidence** (logs, screenshots, test data).  
+3. **Re‑produce the issue in a controlled environment.**  
+4. **Identify the root cause** and apply a fix.  
+5. **Add automated regression coverage** so the bug never re‑appears.  
+
+Below is a **complete, actionable play‑book** you can follow right away, plus a **sample implementation** that demonstrates how you would fix a typical “null‑reference / unexpected‑value” bug in a JavaScript/Node.js code‑base (the most common scenario when a ticket is created without details).
 
 ---
 
 ## 1️⃣ Problem Analysis  
 
-| Aspect | Observation | Action Needed |
-|--------|-------------|---------------|
-| **Missing context** | No description, no screenshots, no logs, no environment details. | Gather missing information from the reporter or stakeholders. |
-| **Potential domains** | The ticket lives in a Scrum board called *SCRUM* – likely a feature or component already in the sprint. | Identify which backlog item or user story the bug is attached to (e.g., “Task 3” may be a sub‑task of a larger story). |
-| **Impact** | Unknown – could be a UI glitch, a failing unit test, a runtime exception, or a performance regression. | Ask the reporter to provide: <br>• Steps to reproduce (S2R) <br>• Expected vs. actual behavior <br>• Browser/OS or runtime version <br>• Error messages / stack traces <br>• Screenshots or video |
-| **Scope** | Since the ticket is already **In Progress**, a developer may have already started investigating. | Check the branch name, local commits, or any work‑in‑progress notes in the ticket comments. |
-| **Definition of Done (DoD)** | Usually includes unit tests, code review, documentation, and regression verification. | Verify that the DoD for bugs in this project includes those items. |
+| Aspect | What to Look For | How to Capture |
+|--------|------------------|----------------|
+| **Symptom** | – Error message (stack trace, HTTP status, UI toast) <br> – Wrong data shown / missing UI element <br> – Performance slowdown | Screenshot, console log, API response, profiler output |
+| **Scope** | – Is it reproducible for **all** users or only a subset? <br> – Does it happen on **all environments** (dev, staging, prod) or only one? | Test on local dev, Docker compose, staging environment |
+| **Steps to Reproduce** | – Exact sequence of UI clicks / API calls <br> – Input data (payload, query params) <br> – Browser/OS version if UI | Write a **Gherkin** scenario (Cucumber) or a simple markdown list |
+| **Impact** | – Does it block a critical workflow? <br> – Is data corrupted? <br> – Does it cause crashes? | Talk to the reporter / product owner, check ticket comments |
+| **Related Code** | – Search the repo for the UI component / API endpoint mentioned in the symptom. <br> – Look for recent commits (git log) that touched that area. | `git log -p -S <keyword>` or `git blame` on the suspect file |
 
-**Root‑cause hypothesis (until more data is available)**  
+**Typical “blank” bug patterns**  
 
-| Symptom (possible) | Likely cause | Typical fix |
-|--------------------|--------------|-------------|
-| UI element not rendering | CSS class missing, component not mounted, or API data undefined | Add null‑checks, ensure CSS is imported, verify API contract |
-| API call returns 500/404 | Wrong endpoint, missing auth token, backend regression | Update endpoint URL, add proper error handling, mock backend for tests |
-| Unit test fails | Refactor changed public API, test data outdated | Update test expectations, add new test cases |
-| Build fails (webpack, Maven, etc.) | Dependency version mismatch, missing config | Pin dependency versions, add missing plugin config |
-
-*These are placeholders – the real cause will be discovered once the missing information is supplied.*
+| Pattern | Likely Root Cause | Quick Diagnostic |
+|---------|-------------------|-------------------|
+| *Null/undefined reference* | Missing guard, API changed contract, optional field not checked | Console error: `Cannot read property 'x' of undefined` |
+| *Incorrect HTTP status* | Wrong error handling, missing `return` in async flow | API returns 200 with error payload |
+| *UI not updating* | State mutation outside React/Redux flow, missing `setState` | React devtools shows stale props |
+| *Performance spike* | Un‑debounced event, N+1 DB queries, large payload parsing | Chrome DevTools > Performance tab shows long task |
 
 ---
 
 ## 2️⃣ Solution Steps  
 
-### Step 0 – Gather Missing Information (Immediate)
-1. **Comment on the ticket** asking the reporter for:
-   - Exact steps to reproduce.
-   - Environment (OS, browser, device, Node/Java version, etc.).
-   - Any error messages, console logs, or stack traces.
-   - Screenshots / video if UI‑related.
-2. **Check linked items** (e.g., parent story, related sub‑tasks, commits).  
-   - If a branch exists (e.g., `feature/task-3-fix`), pull it locally and run the code to see the current state.
-3. **Search the codebase** for the term “Task 3” or any recent changes that could be related.
+Below is a **generic, repeatable workflow** you can apply to any bug, followed by a concrete example (JavaScript/Node.js) that you can adapt to your stack.
 
-### Step 1 – Reproduce the Issue Locally
-- Follow the S2R provided.
-- Record the exact output (console logs, UI state, test failures).
-- If the bug cannot be reproduced, note the conditions under which it *does* appear (e.g., after a specific user action, only on Chrome, only in production).
+### 2.1 Gather Information  
 
-### Step 2 – Isolate the Root Cause
-- **Debugging**:  
-  - Use breakpoints / `console.log` / `debugger` to trace the flow.  
-  - For backend, enable request/response logging.  
-- **Bisect** recent commits (git bisect) if the bug appeared after a merge.  
-- **Static analysis**: Run linters, type‑checkers (TS, Flow, SpotBugs) to spot obvious errors.
+1. **Add a comment** on SCRUM‑3 asking the reporter for:  
+   * Exact steps to reproduce (copy‑paste if possible).  
+   * Environment details (browser, OS, app version, API version).  
+   * Any logs or screenshots.  
+2. **Create a temporary branch** for investigation:  
+   ```bash
+   git checkout -b bugfix/SCRUM-3-investigate
+   ```
+3. **Run the application locally** with the same configuration as the reported environment (e.g., `docker-compose up -d`).
 
-### Step 3 – Implement the Fix  
-Below is a **generic “defensive‑coding” template** that can be adapted once
+### 2.2 Re‑produce & Isolate  
+
+1. Follow the steps you collected.  
+2. If the bug is not reproducible, **add instrumentation**:  
+   * Insert `console.log` / `logger
 
 ---
 
-**Generated At:** 2026-02-02T05:48:56.795Z  
+**Generated At:** 2026-02-02T05:49:21.923Z  
 **AI Model:** openai/gpt-oss-120b  
 **Token Usage:** {
-  "queue_time": 0.049473214,
+  "queue_time": 0.055686593,
   "prompt_tokens": 245,
-  "prompt_time": 0.009429415,
+  "prompt_time": 0.009959845,
   "completion_tokens": 1024,
-  "completion_time": 2.193482305,
+  "completion_time": 2.222417623,
   "total_tokens": 1269,
-  "total_time": 2.20291172,
+  "total_time": 2.232377468,
   "completion_tokens_details": {
-    "reasoning_tokens": 101
+    "reasoning_tokens": 150
   }
 }
