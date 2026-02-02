@@ -6,76 +6,58 @@ the file structure is bad in ai branch
 ## Full Solution
 
 ## PROBLEM ANALYSIS
-The **`ai`** branch contains a flat, un‑organized file layout – all Python modules, data files, model checkpoints and utility scripts sit in the repository root.  
-This makes the code hard to navigate, increases the risk of import errors, and prevents the project from scaling (e.g., adding tests, new models, or data preprocessing steps).
+The repository’s current layout places the **SCRUM‑5** project directly under `projects/`.  
+The Jira issue *SCRUM‑6* states that the file structure is “bad in ai branch” and asks to **improve the AI structure**.  
+A clearer, more scalable layout is to group AI‑related projects under a dedicated `ai/` directory.  
+Moving the existing SCRUM‑5 project into `projects/ai/` will:
 
-**Root cause**
-* No logical directory hierarchy was defined when the branch was created.  
-* All files were added directly to the root, so related code (models, utils, tests, data) is mixed together.  
-* Because imports are written as flat‑module imports (`import preprocess` etc.), moving files later would break the code.
+1. Separate AI‑related work from other potential project types.  
+2. Make the repository easier to navigate for future contributors.  
+3. Keep all existing code functional – the only required change is updating any internal path references (the HTML file already uses relative paths, so no code changes are needed).
 
-## SOLUTION CODE
-Below is a **self‑contained, production‑ready Python utility** that:
+## SOLUTION
+Create a new `ai` sub‑folder under `projects/` and move the entire **SCRUM‑5** project there.  
+Add a short note in the root `README.md` to explain the new structure.
 
-1. **Creates a clean directory structure** (`src/`, `src/models/`, `src/data/`, `src/utils/`, `tests/`).
-2. **Moves existing files** into the appropriate folder based on simple naming conventions.
-3. **Updates intra‑project imports** so that the code continues to work after the move (converts flat imports to package imports).
-4. Generates a **`setup.cfg`** and **`pyproject.toml`** so the project can be installed as a package (`pip install -e .`) – this is the recommended way to keep imports stable after restructuring.
+### FILE: projects/ai/SCRUM-5/index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCRUM‑5</title>
+  <link rel="stylesheet" href="../src/index.css" />
+</head>
+<body>
+  <h1>Hello SCRUM‑5!</h1>
+  <script src="../src/index.js"></script>
+</body>
+</html>
+```
 
-> **Important** – The script is **idempotent**: running it a second time will not break the layout.
+### FILE: projects/ai/SCRUM-5/index.css
+```css
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+h1 {
+  color: #333;
+}
+```
 
-### File: `restructure_ai.py`
-```python
-#!/usr/bin/env python3
-"""
-restructure_ai.py
-
-A utility to reorganise a flat AI‑project repository into a clean,
-standard Python package layout.
-
-Features
---------
-* Creates the following hierarchy (if not already present):
-    ├─ src/
-    │   ├─ __init__.py
-    │   ├─ models/
-    │   ├─ data/
-    │   ├─ utils/
-    ├─ tests/
-* Moves files based on simple naming heuristics:
-    - "*model*"   → src/models/
-    - "*data*"    → src/data/
-    - "*util*" or "*helper*" → src/utils/
-    - "*test*"   → tests/
-    - everything else stays in src/
-* Rewrites import statements that referenced moved modules so that they
-  use the new package path (e.g. `import preprocess` → `from src import preprocess`).
-* Generates a minimal `pyproject.toml` and `setup.cfg` so the project can be
-  installed in editable mode (`pip install -e .`).
-
-Usage
------
-    $ python restructure_ai.py   # run from the repository root
-"""
-
-import ast
-import os
-import shutil
-import sys
-from pathlib import Path
-from typing import Dict, List
-
-# --------------------------------------------------------------------------- #
-# Configuration – adjust patterns if your project uses different naming
-# --------------------------------------------------------------------------- #
-PATTERNS = {
-    "models": ["model", "network", "nn"],
-    "data": ["data", "dataset", "loader"],
-    "utils": ["util", "helper
+### FILE: projects/ai/SCRUM-5/index.js
+```js
+// Simple entry point for SCRUM‑5 demo
+document.addEventListener('DOMContentLoaded', () =>
 
 ---
 
-**Code Language:** javascript  
-**Generated At:** 2026-02-02T06:25:17.152Z  
+**Code Language:** html  
+**Generated At:** 2026-02-02T06:29:34.959Z  
 **AI Model:** openai/gpt-oss-120b  
-**Tokens Used:** 1622
+**Tokens Used:** 1753
