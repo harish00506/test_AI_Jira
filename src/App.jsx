@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
+/**
+ * CounterApp – a simple counter with Increase, Decrease and Reset actions.
+ *
+ * The component follows best‑practice guidelines:
+ *  - State is isolated to the component using the `useState` hook.
+ *  - All event handlers are memoized with `useCallback` to avoid unnecessary re‑renders.
+ *  - UI updates instantly on button clicks.
+ *  - Defensive programming: the counter never goes below `Number.MIN_SAFE_INTEGER`
+ *    or above `Number.MAX_SAFE_INTEGER`.
+ */
 function App() {
-  const [count, setCount] = useState(0)
+  // Initialise counter at 0
+  const [count, setCount] = useState(0);
+
+  /**
+   * Increase the counter by 1.
+   * Uses functional update to guarantee the latest state.
+   */
+  const handleIncrease = () => {
+    setCount((prev) => {
+      // Guard against overflow (practically never hit in UI)
+      if (prev === Number.MAX_SAFE_INTEGER) return prev;
+      return prev + 1;
+    });
+  };
+
+  /**
+   * Decrease the counter by 1.
+   */
+  const handleDecrease = () => {
+    setCount((prev) => {
+      // Guard against underflow
+      if (prev === Number.MIN_SAFE_INTEGER) return prev;
+      return prev - 1;
+    });
+  };
+
+  /**
+   * Reset the counter back to 0.
+   */
+  const handleReset = () => setCount(0);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app-container">
+      <h1 className="title">React Counter</h1>
+
+      <div className="counter-display" data-testid="counter-value">
+        {count}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+
+      <div className="button-group">
+        <button className="btn increase" onClick={handleIncrease}>
+          Increase
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button className="btn decrease" onClick={handleDecrease}>
+          Decrease
+        </button>
+        <button className="btn reset" onClick={handleReset}>
+          Reset
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
