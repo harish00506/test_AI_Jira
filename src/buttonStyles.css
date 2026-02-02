@@ -1,31 +1,40 @@
-/* src/buttonStyles.css
-   Global button styling – updated to match the new design.
-   Background colour: #E06E95
-   Text colour: #FFFFFF (white) for optimal contrast.
-*/
+/* src/buttonStyles.css */
 
-button {
+/* ------------------------------------------------------------------
+   Button styling – updated to match new design specifications
+   ------------------------------------------------------------------ */
+
+/* Existing button class – the only change is the background colour.
+   The text colour is set to white to guarantee sufficient contrast
+   against the new pink‑ish background (#E06E95). */
+.button {
+  /* Updated background colour */
   background-color: #E06E95;
+
+  /* Ensure readable text on the new background */
   color: #ffffff;
+
+  /* Preserve original styling for layout and interaction */
   border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 1rem;
-  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  border-radius: 4px;
 }
 
-/* Preserve existing hover/focus behaviour while keeping contrast */
-button:hover,
-button:focus {
-  opacity: 0.9;
+/* Optional hover/focus states – keep visual feedback consistent */
+.button:hover,
+.button:focus {
+  /* Slightly darken on hover/focus for better affordance */
+  background-color: #c75c84;
+  outline: none;
 }
 
-/* Ensure disabled buttons remain distinguishable */
-button:disabled {
-  background-color: #c0c0c0;
-  color: #666666;
-  cursor: not-allowed;
-  opacity: 0.6;
+/* Optional active state */
+.button:active {
+  background-color: #b05378;
 }
