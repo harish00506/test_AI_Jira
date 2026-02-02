@@ -1,6 +1,6 @@
 /* src/App.css */
 
-/* Existing global styles */
+/* Existing styles (unchanged) */
 #root {
   margin: 0;
   padding: 0;
@@ -8,7 +8,6 @@
   text-align: center;
 }
 
-/* Logo styling */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -21,47 +20,50 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* Card container */
 .card {
   padding: 2em;
 }
 
-/* Footer text */
 .read-the-docs {
   color: #888;
 }
 
 /* -------------------------------------------------
-   Button Styling – Updated per SCRUM-13
+   New button styling – fulfills SCRUM‑13
    ------------------------------------------------- */
 button {
-  /* Primary background color as requested */
+  /* Required background color */
   background-color: #59E60E;
 
-  /* Ensure text is readable – white provides sufficient contrast */
+  /* Ensure readable text – white provides strong contrast */
   color: #ffffff;
 
-  /* Remove default border and add a subtle rounded look */
+  /* Remove default border and add a subtle radius */
   border: none;
   border-radius: 4px;
 
   /* Padding for a comfortable clickable area */
   padding: 0.5rem 1rem;
 
-  /* Use pointer cursor to indicate interactivity */
+  /* Use the system font for consistency */
+  font-family: inherit;
+  font-size: 1rem;
+
+  /* Pointer cursor to indicate interactivity */
   cursor: pointer;
 
   /* Smooth transition for hover effect */
-  transition: opacity 0.2s ease-in-out;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
-/* Slight visual feedback on hover */
-button:hover {
+/* Slight visual feedback on hover/focus */
+button:hover,
+button:focus {
   opacity: 0.9;
 }
 
 /* Preserve focus outline for accessibility */
 button:focus-visible {
-  outline: 2px solid #2c7a0b;
+  outline: 2px solid #ffffff;
   outline-offset: 2px;
 }
