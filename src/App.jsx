@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 /**
@@ -14,6 +14,15 @@ import "./App.css";
 function App() {
   // Initialise counter at 0
   const [count, setCount] = useState(0);
+  // Message from backend
+  const [apiMessage, setApiMessage] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/hello')
+      .then((res) => res.json())
+      .then((data) => setApiMessage(data.message))
+      .catch(() => setApiMessage('Could not reach API'));
+  }, []);
 
   /**
    * Increase the counter by 1.
@@ -50,6 +59,12 @@ function App() {
       <div className="counter-display" data-testid="counter-value">
         {count}
       </div>
+
+      {apiMessage && (
+        <div className="api-message" style={{ marginTop: 12 }}>
+          {apiMessage}
+        </div>
+      )}
 
       <div className="button-group">
         <button className="btn increase" onClick={handleIncrease}>
